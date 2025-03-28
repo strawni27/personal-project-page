@@ -2,3 +2,6 @@ remote_theme: pages-themes/cayman@v0.2.0
 title: Config Title
 author: Ian Strawn
 description: A website where I post a lot of the statistical/analytical things that I do!
+
+<a href="www.linkedin.com/in/ian-strawn-548234255" class="btn">New Button</a>
+
