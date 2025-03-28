@@ -1,5 +1,5 @@
 ---
-title: Index Title
+title: Personal Project Page
 ---
 
 <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn">New Button</a>
