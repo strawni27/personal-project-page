@@ -1,5 +1,5 @@
 ---
-title: Personal Project Page
+title: Index Title
 ---
 
 # Welcome!
