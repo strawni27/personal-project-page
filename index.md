@@ -3,7 +3,3 @@ title: This is just a test landing page. I'll create an actual page for myself h
 ---
 
 # This is just a test for the things that I'd like to have on my blog. We'll see how this looks
-
-## Just testing a few things here
-
-$\frac{1}{\sqrt{2\pi\sigma^2}}e^{\frac{-(x-\mu)^2}{2\sigma^2}}$ is the pdf for a normal distribution
