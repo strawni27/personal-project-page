@@ -1,1 +1,1 @@
-Nothing yet
+This website is just a personal site where I'm going to upload some of the work that I do over the course of my studies as a statistics student. As more interesting projects get done, I'll upload them here!
