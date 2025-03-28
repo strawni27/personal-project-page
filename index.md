@@ -1,5 +1,7 @@
 ---
-title: This is just a test landing page. I'll create an actual page for myself here soon
+title: Personal Project Page
 ---
 
-# This is just a test for the things that I'd like to have on my blog. We'll see how this looks
+# Welcome!
+
+My name is Ian Strawn, and this is my personal site! I'm a statistics Masters student at Oregon State University, and I aim to use this space to showcase some of the work that I do as a statistics student and aspiring data analyst. As I work on new projects, I'll upload them to the "Posts" section of this website. Thanks for taking a look!
