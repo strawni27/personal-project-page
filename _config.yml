@@ -4,7 +4,3 @@ author: Ian Strawn
 description: A website where I post a lot of the statistical/analytical things that I do!
 plugins:
   - jekyll-remote-theme
-
-
-<a href="www.linkedin.com/in/ian-strawn-548234255" class="btn">New Button</a>
-
