@@ -2,7 +2,7 @@
 title: Index Title
 ---
 
-<a href="www.linkedin.com/in/ian-strawn-548234255" class="btn">New Button</a>
+<a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn">New Button</a>
 
 # Welcome!
 
