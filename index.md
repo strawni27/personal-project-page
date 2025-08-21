@@ -18,7 +18,7 @@ title: Personal Project Page
 
 .btn-green { background: #2ecc40; }
 .btn-green:hover { background: #27ae36; }
-<style>
+</style>
 
 # Welcome!
 
