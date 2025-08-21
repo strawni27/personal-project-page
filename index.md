@@ -5,7 +5,6 @@ title: Personal Project Page
 <style>
 .btn {
   display: inline-block;
-  background: #0077b5;
   color: #fff !important;
   padding: 0.5em 1em;
   border-radius: 4px;
@@ -13,10 +12,13 @@ title: Personal Project Page
   font-weight: bold;
   border: none;
 }
-.btn:hover {
-  background: #005983;
-}
-</style>
+
+.btn-blue { background: #0077b5; }
+.btn-blue:hover { background: #005983; }
+
+.btn-green { background: #2ecc40; }
+.btn-green:hover { background: #27ae36; }
+<style>
 
 # Welcome!
 
