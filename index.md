@@ -17,9 +17,9 @@ title: Personal Project Page
 .btn-blue:hover { background: #005983; }
 </style>
 
-# Welcome!
-
 <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn1</a>
+
+# Welcome!
 
 [LinkedIn2](https://www.linkedin.com/in/ian-strawn-548234255){: .btn .btn-blue}
 
