@@ -2,6 +2,22 @@
 title: Personal Project Page
 ---
 
+<style>
+.btn {
+  display: inline-block;
+  background: #0077b5;
+  color: #fff !important;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+}
+.btn:hover {
+  background: #005983;
+}
+</style>
+
 # Welcome!
 
 <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn">LinkedIn</a>
