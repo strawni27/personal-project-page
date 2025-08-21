@@ -4,3 +4,6 @@ author: Ian Strawn
 description: A website where I post a lot of the statistical/analytical things that I do!
 plugins:
   - jekyll-remote-theme
+
+kramdown:
+  parse_block_html: true
