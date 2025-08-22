@@ -25,7 +25,7 @@ title: Personal Project Page
 
 <a href="./_posts/" class="btn btn-blue">View My Posts</a>
 
-<a href="/blog/" class="btn btn-blue">Blog</a>
+<a href="./blog/" class="btn btn-blue">Blog</a>
 
 # Welcome!
 
