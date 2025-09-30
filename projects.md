@@ -3,6 +3,27 @@ title: "My Projects"
 description: "Explore all the cool things I’ve built and shared!"
 ---
 
+<style>
+.btn {
+  display: inline-block;
+  color: #fff !important;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+}
+
+.btn-blue { background: #0077b5; }
+.btn-blue:hover { background: #005983; }
+
+.btn-green { background: #28a745; }
+.btn-green:hover { background: #1e7e34; }
+
+</style>
+
+<a href="https://strawni27.github.io/personal-project-page/" class="btn btn-green">Back to Home</a>
+
 Welcome! Here you'll find a handful of projects that I've worked on during my time at Oregon State.
 
 # Project 1: Wine Quality Analysis Using Machine Learning Techniques
