@@ -23,9 +23,7 @@ title: Personal Project Page
 
 <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
 
-<a href="./_posts/" class="btn btn-blue">View My Posts</a>
-
-<a href="./blog/" class="btn btn-blue">Blog</a>
+<a href="https://strawni27.github.io/personal-project-page/projects" class="btn btn-blue">View My Posts</a>
 
 # Welcome!
 
