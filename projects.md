@@ -1,6 +1,6 @@
 ---
 title: "My Projects"
-description: "Explore all the cool things I’ve built and shared!"
+description: "Take a look at the things I've created and shared!"
 ---
 
 <style>
@@ -28,7 +28,9 @@ Welcome! Here you'll find a handful of projects that I've worked on during my ti
 
 # Project 1: Wine Quality Analysis Using Machine Learning Techniques
 
-This project was one that I did as the final project for ST 599: Topics in Machine Learning. In it, I use machine learning techniques to analyze wine quality samples from 2008.
+Completed 06/09/2025
+
+This project was one that I did as the final project for ST 599: Topics in Machine Learning. In it, I discuss theory behind machine learning regression techniques, then implement those to analyze wine quality data.
 
 - [Read the PDF Report](wine-project/final_project.pdf)
 - [View R Code](wine-project/final_project.Rmd)
