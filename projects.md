@@ -37,3 +37,12 @@ This project was one that I did as the final project for ST 599: Topics in Machi
 - View the datasets:
    - [Red Wine](wine-project/winequality-red.csv)
    - [White Wine](wine-project/winequality-white.csv)
+
+# Project 2: Monte-Carlo Simulation Study Involving Low-Probability Events in Golf
+
+This is another final project that I did, this time for ST 541: Probability, Computation, and Simulation. This project involved conducting a simulation study to estimate low-probability events, which I chose to apply to the probability of breaking 59 on the PGA Tour.
+
+Completed 12/10/2025
+
+- [Read the PDF Report](golf-montecarlo-project/breaking_60_with_sims.pdf)
+- [View R Code](golf-montecarlo-project/breaking_60_with_sims.pdf)
