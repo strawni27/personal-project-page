@@ -1,0 +1,377 @@
+---
+title: "Breaking 60 Using Simulations"
+author: "Ian Strawn"
+date: "2025-12-03"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(gt)
+```
+
+# Introduction
+
+The PGA tour, the golf world's leading professional golf organization, has been home to some of the world's best golfers for over a century. These golfers compete against each other on a weekly basis, often in fields that include 150+ golfers. With this many golfers competing against one another, over the course of the decades, many statistically abnormal situations have arisen. However, one of the most impressive ones in the sport of golf is also one of the most statistically unusual: breaking 60. In order to break 60, a golfer must take 59 strokes or less to complete an 18-hole golf course. When the expected score of most golf courses is around 72, this would amount to doing 13 strokes better than expected, which is *extremely* difficult to do, even for the best in the world. In the Tour's history, a score of 59 or better has only been achieved 15 times, by 14 different golfers. The only person to do it twice, Jim Furyk, has carded both a 59 and a 58, the latter of which remains the best score in Tour history.
+
+Before continuing, establishing some terminology is important. The standard round of golf includes playing 18 holes, with each hole having an expected score of between 3 and 5. The score of this hole is known as the hole's "par" (e.g. a par 4 is a hole where you are expected to put the ball in the hole in 4 strokes). The following are terms that refer to the scores you can get on any given hole (where a '-' sign refers to finishing the hole under par, and a '+' refers to finishing the hole over par):
+
+- Eagle: -2 on a hole
+
+- Birdie: -1 on a hole
+
+- Par: Achieved expected score on a hole (E)
+
+- Bogey: +1 on a hole
+
+- Double Bogey: +2 on a hole
+
+This list is not exhaustive - there are other scores achievable on holes, but the ones listed are the most common (particularly for professionals). 
+
+With a feat as significant as breaking 60 being so unlikely to happen, I was left wondering; how often would we expect people of different skill levels to be able to do so? To answer this question, I decided that I would compile the average scores of players of different skill levels and run a series of Monte-Carlo simulations to estimate how many rounds it would take for different players to shoot 59 or better. 
+
+# Methods
+
+I selected three types of golfers to include in my simulation study: the "average" PGA tour pro, the current #1 ranked golfer globally (Scottie Scheffler), and a "scratch" golfer (someone who isn't a professional, but would expect to shoot par on a good day, putting them in the top 10% of golfers globally). For the average PGA professional and for Scheffler, I compiled statistics from the 2025 PGA tour season to determine the probabilities of making a certain score on any given hole. For the scratch golfer, I did something similar, but instead of using PGA tour data, I just used publicly sourced data (listed in my sources). Each score type and their respective probabilities are listed in Table 1. 
+
+```{r}
+#| echo: false
+#Table for The probabilities of hole scores
+df1 <- data.frame(
+  Row_Name = c("PGA Average", "Scottie Scheffler", "Scratch"),
+  "Eagle" = c(0.0058, 0.0097, 0.0025),
+  "Birdie" = c(0.2111, 0.2611, 0.1300),
+  "Par" = c(0.6209, 0.6146, 0.5564),
+  "Bogey" = c(0.1455, 0.1056, 0.2611),
+  "Double +" = c(0.0167, 0.0090, 0.0500)
+)
+
+gt(df1) %>%
+  cols_label(Row_Name = "Player") %>%
+  cols_align(align = "center") %>%
+  tab_caption("Hole Score and Respective Probability for Players")
+```
+
+Among all three groups, the only true similarity is that eagles are extremely unlikely to be made, as can be seen in the table. The differences in probabilities are most notable in the birdie and bogey rates. Scheffler, being ranked as the best in the world, makes more birdies and less bogeys than both the scratch golfers and the PGA average. While this is unsurprising, it does highlight how even a small change in probabilities (the difference between Scottie and the PGA average is within 0.05 for both) can lead to drastically different results. 
+
+Once these probabilities had been compiled, I created a function that would simulate 18 holes of golf for each type of golfer. The function would simulate 18 holes, check the score of the golfer, and would continue to simulate rounds until one with a score of 59 or better was found. The number of iterations needed is kept track of, so once the desired score is achieved, the number of necessary iterations is output and stored. This process is then repeated 1000 times for each golfer, giving an empirical distribution of how many rounds it would take for each of them to break 60. The code for the function and the simulations is included in the second subsection of the [**Appendix**](#function), but here is a brief overview of the steps the algorithm takes:
+
+1. Randomly generate a single round of golf for specified golfer using `sample()`
+
+2. Increase the "number of rounds" counter by 1
+
+3. Check to see if the target score is 59 or better
+
+    - If not 59 or better, repeat steps 1-3 until a score of 59 or better is achieved
+  
+4. Return the number of iterations necessary to achieve 59 or better
+
+It's also worth mentioning that many simplifying assumptions are going into this model. Among them, this model assumes that the golfers are all playing on an "average" golf course on an "average" day, and that the holes played are all independent of each other. While some of the best golfers in the world are better at treating holes as independent of each other, in reality, there is almost certainly some light dependence between holes (e.g. a player who starts well will likely continue to play well throughout the round). Despite this we'll continue.
+
+# Results
+
+**Important note about the results**: A Scratch golfer was *so* unlikely to break 60 that the algorithm that I wrote (and my wimpy laptop) failed to produce results for them. As such, the results are limited to Scottie Scheffler and the average PGA Tour golfer.
+
+The average and median number of rounds needed to break 60 for Scheffler and the Average PGA Tour golfer are included Table 2. With them are also a measure of Standard Error. Additionally included are two boxplots comparing the rounds needed to break 60. These are included in figures 1 and 2.
+
+```{r}
+#| echo: false
+#Table for Average Number of Rounds
+df2 <- data.frame(
+  Row_Name = c("PGA Average", "Scottie Scheffler"),
+  "Average Rounds" = c(111758,
+                       5665),
+  "Median Rounds" = c(75401,
+                      4086),
+  "Standard Error" = c(111162,
+                       5558)
+  )
+
+gt(df2) %>%
+  cols_label(Row_Name = "Player") %>%
+  cols_align(align = "center") %>%
+  tab_caption("Average Rounds to Break 60 by Player")
+```
+
+```{r}
+#| out.width: "50%"
+#| fig.align: center
+#| echo: false
+#| fig.cap: "Boxplot of the Number of Rounds Needed to Break 60"
+knitr::include_graphics("boxplot.png")
+```
+
+```{r}
+#| out.width: "50%"
+#| fig.align: center
+#| echo: false
+#| fig.cap: "Boxplot of the log(Number of Rounds Needed to Break 60)"
+knitr::include_graphics("logrounds_boxplot.png")
+```
+
+Some additional histograms are [**included in the appendix**](#histograms), which represent the 2 different empirical distributions.
+
+# Results/Discussion
+
+The most obvious insight into this data are the different scales on which the 2 distributions exist. Despite only having slightly better scoring probabilities than the average PGA Tour player (see table 1), Scottie Scheffler appears to be *far* more likely to be able to break 60 than the average PGA tour player is. The median number of rounds needed to break 60 for the average player is just north of 75,000, and none of the average players will ever play enough rounds over their careers to even begin to approach this number. Scottie's median number of 4,086, however, is far more reachable - this is still beyond the number of rounds that people can reasonably play on Tour in a career, but its far more feasible than for the average player. 
+
+Looking at the boxplots, the difference in distributions is even more noticeable. Figure 1's boxplot demonstrates how wildly different the scales of the two distributions are, with Scottie's distribution appearing smushed in comparison to the distribution of the average PGA player. Even when the number of rounds is log-transformed, like in figure 2, we can see the that the bulk of Scottie's distribution sits well behind the bulk of the average PGA distribution. Concluding that Scottie is better than the rest of the field seems obvious, but the scale on which he's demonstrably better is what makes these results so interesting.
+
+If I were to perform this study again - or expand its scope - I'd like to focus more broadly on calculating the probability of certain scores in general (not just reaching a certain threshold like 59). My motivation for doing so would be to catch cheaters, of which there are many in the sport of golf. In many competitive situations, a common (and frustrating) outcome involves a golfer deliberately understating their skill level and then shooting a score that is unrealistic for someone of that claimed ability. This allows them to be grouped with worse players for competitive purposes, leading them to unfairly dominate their field (this is known as "sandbagging"). In order to catch sandbaggers, what I'd like to do is compile probabilities of scores from a variety of skill levels and create a function that gives you the probability of seeing a certain score for someone of that level. In theory, we could use extremely unlikely scores to help catch sandbaggers, and ensure more fairness in the game.  
+
+\newpage
+
+# Appendix
+
+## Probabilities
+
+The following are the probabilities of making each score on any given hole for the 3 types of golfers I chose to look at.
+
+### Scottie Scheffler
+
+- eagles: 0.0097
+
+- birdies: 0.2611
+
+- par: 0.6146
+
+- Bogey: 0.1056
+
+- Double Bogey: 0.0090
+
+### Average PGA Tour Pro
+
+- eagles: 0.0057604
+
+- birdies: 0.21111111
+
+- par: 0.62093
+
+- Bogey: 0.1455333
+
+- Double Bogey: 0.0166666666
+
+### Scratch Golfer
+
+- eagles: 0.0025
+
+- birdies: 0.1300
+
+- par: 0.5564
+
+- Bogey: 0.2611
+
+- Double Bogey: 0.0500
+
+## Function
+
+This is the function I used to calculate the number of rounds it would take for a single instance of breaking 60. Notice that the function takes 2 arguments: one for the probability of making 
+
+```{r}
+#Writing the function to check the number of simulations
+sim = function(prob, par){
+  #Checking Probability works
+  if(sum(prob) != 1){
+    return("Probability Doesn't Sum to 1")
+  }
+  
+  #Checking the par of the golf course is reasonable
+  if(par < 69 || par > 73){
+    return("lol mid golf course")
+  }
+  
+  #Initialization of variables
+  cond = 0
+  iterations = 0
+  scores = c(-2, -1, 0, 1, 2)
+  target = 59 - par
+  
+  #How many rounds?
+  while(cond == 0){
+    #Generate a random score for 18 holes
+    temp_score = sum(sample(scores, 
+                            size = 18, 
+                            replace = TRUE, 
+                            prob = prob))
+    
+    #Increase number of iterations
+    iterations = iterations+1
+    
+    #Check if target score is achieved, otherwise repeat
+    if(temp_score <= target){
+      break
+    }
+    
+  }
+  
+  #Return number of iterations
+  return(iterations)
+}
+```
+
+## Simulation for Scottie
+
+```{r}
+#| eval: false
+set.seed(12)
+nsim = 1000
+p_scottie = c(0.0097,
+              0.2611,
+              0.6146,
+              0.1056,
+              0.0090)
+
+rounds_scottie = rep(0, nsim)
+
+for(i in 1:nsim){
+  rounds_scottie[i] = sim(p_scottie, 72)
+  
+  #Progress bar
+  if(i %% (nsim/100) == 0){
+    print(i*100/nsim)
+  }
+}
+hist(rounds_scottie,
+     main = "Histogram of Number of Rounds Needed, Scottie Scheffler", 
+     xlab = "Number of Rounds Needed")
+```
+
+
+
+## Simulation for Average PGA Tour Player
+
+```{r}
+#| eval: false
+set.seed(12)
+p_average = c(0.0058,     #Eagles
+              0.2111,     #Birdies
+              0.6209, #Pars
+              0.1455,     #Bogeys
+              0.0167)    #Doubles
+
+scores = c(-2, -1, 0, 1, 2)
+
+#Taking a score sample of an 18 hole round
+sum(sample(scores, size = 18, replace = TRUE, prob = p_average))
+
+#Initialization
+rounds_avg = rep(0, nsim)
+
+for(i in 1:nsim){
+  rounds_avg[i] = sim(p_average, 72)
+  
+  #Progress bar
+  if(i %% (nsim/100) == 0){
+    print(i*100/nsim)
+  }
+}
+
+hist(rounds_avg,
+     main = "Histogram of Number of Rounds Needed, PGA Average", 
+     xlab = "Number of Rounds Needed")
+```
+
+## Simulation for Scratch Golfers
+
+Note: this code doesn't actually run, but it's what I would've used for the scratch golfers. Unfortunately, the probabilities associated with them don't allow for any kind of convergence.
+
+```{r}
+#| eval: false
+set.seed(12)
+p_scratch = c(0.0025,
+              0.13,
+              0.5564,
+              0.2611,
+              0.05)
+
+rounds_scratch = rep(0, nsim)
+
+for(i in 1:(nsim/10)){
+  rounds_scratch[i] = sim(p_scratch, 72)
+  
+  #Progress bar
+  if(i %% (nsim/100) == 0){
+    print(i*100/(nsim/10))
+  }
+}
+```
+
+## Histograms
+
+The histograms of the two distributions for which I was able to gather data are included as figures 3 and 4.
+
+```{r}
+#| out.width: "50%"
+#| fig.align: center
+#| echo: false
+#| fig.cap: "Histogram of distribution of rounds needed to break 60 for Scottie Scheffler"
+knitr::include_graphics("scottie_hist.png")
+```
+
+```{r}
+#| out.width: "50%"
+#| fig.align: center
+#| echo: false
+#| fig.cap: "Histogram of distribution of rounds needed to break 60 for an average PGA Tour player"
+knitr::include_graphics("pga_hist.png")
+```
+
+## Creating Boxplots
+
+```{r}
+#| eval: false
+#Putting Datasets Together
+rounds = data.frame(rounds = c(rounds_avg, rounds_scottie), 
+                    player = c(rep("PGA", nsim), 
+                               rep("Scottie", nsim)))
+
+#Boxplots
+ggplot(rounds, aes(x = rounds, y = player, fill = player))+
+  geom_boxplot()+
+  xlim(c(0, 3.5e05))+
+  labs(title = "Number of Rounds Needed to Break 60",
+       x = "# of Rounds",
+       y = "Player",
+       fill = "Player") #+
+  #scale_y_continuous(
+  #  labels(c("Scottie", "Average"))  # what they say
+  #)
+
+#Trying a log scale
+ggplot(rounds, aes(x = log(rounds), y = player, fill = player))+
+  geom_boxplot()+
+  #xlim(c(0, 3.5e05))+
+  labs(title = "Number of log(Rounds) Needed to Break 60",
+       x = "Log # of Rounds",
+       y = "Player",
+       fill = "Player")
+```
+
+## Table Code
+
+```{r}
+#| eval: false
+#Table for Average Number of Rounds
+df2 <- data.frame(
+  Row_Name = c("PGA Average", "Scottie Scheffler"),
+  "Average Rounds" = c(round(mean(rounds_avg), 0),
+                       round(mean(rounds_scottie), 0)),
+  "Standard Error" = c(round(sd(rounds_avg), 0),
+                       round(sd(rounds_scottie), 0))
+  )
+
+gt(df2) %>%
+  cols_label(Row_Name = "Player") %>%
+  cols_align(align = "center") %>%
+  tab_caption("Average Rounds to Break 60 by Player")
+```
+
+# Sources
+- https://www.pgatour.com/stats/scoring
+
+- https://www.hole19golf.com/the-19th-hole/pga-tour-stats-to-manage-your-expectations#:~:text=The%20Scoring%20Difference:%20It's%20Not,walk%20spoiled.%22%20%2D%20Mark%20Twain
+
+- https://ejsgolf.com/post/PGA-LPGA-Scratch-Statistic-Comp
+
+- https://www.golfmonthly.com/features/how-many-birdies-do-golfers-make-per-round
