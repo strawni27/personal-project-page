@@ -2,6 +2,26 @@
 title: Ian Strawn
 ---
 
+<nav style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+">
+    <div style="font-weight: bold; font-size: 1.2rem;">
+        Ian Strawn
+    </div>
+
+    <div>
+        <a href="index.md" style="margin-right: 20px;">Home</a>
+        <a href="projects.md" style="margin-right: 20px;">Projects</a>
+        <a href="about.md" style="margin-right: 20px;">About</a>
+        <a href="contact.md">Contact</a>
+    </div>
+</nav>
+
 <style>
 .btn {
   display: inline-block;
