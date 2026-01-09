@@ -16,16 +16,16 @@ border-bottom: 1px solid #ddd;
 </div>
 
 .nav-btn {
-  padding: 8px 14px;
-  background: #e0e0e0;
-  border-radius: 6px;
-  text-decoration: none;
-  color: #333 !important;
-  font-weight: 600;
+padding: 8px 14px;
+background: #e0e0e0;
+border-radius: 6px;
+text-decoration: none;
+color: #333 !important;
+font-weight: 600;
 }
 
 .nav-btn:hover {
-  background: #cfcfcf;
+background: #cfcfcf;
 }
 
 <div>
