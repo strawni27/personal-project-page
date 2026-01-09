@@ -5,8 +5,10 @@ description: A website where I post a lot of the statistical/analytical things t
 plugins:
   - jekyll-remote-theme
 
+markdown: kramdown
 kramdown:
   parse_block_html: true
+
 
 
 
