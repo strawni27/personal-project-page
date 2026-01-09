@@ -15,11 +15,25 @@ border-bottom: 1px solid #ddd;
     Ian Strawn
 </div>
 
+.nav-btn {
+  padding: 8px 14px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333 !important;
+  font-weight: 600;
+}
+
+.nav-btn:hover {
+  background: #cfcfcf;
+}
+
 <div>
-<a href="index.html" style="margin-right: 20px;">Home</a>
-<a href="projects.html" style="margin-right: 20px;">Projects</a>
-<a href="about.html" style="margin-right: 20px;">About</a>
-<a href="contact.html">Contact</a>
+<a href="index.html" class="nav-btn" style="margin-right: 20px;">Home</a>
+<a href="projects.html" class="nav-btn" style="margin-right: 20px;">Projects</a>
+<a href="about.html" class="nav-btn" style="margin-right: 20px;">About</a>
+<a href="contact.html" class="nav-btn">Contact</a>
+
 </div>
 </nav>
 
