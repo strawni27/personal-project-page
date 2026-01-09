@@ -1,4 +1,4 @@
-remote_theme: pages-themes/hacker@v0.2.0
+remote_theme: pages-themes/merlot@v0.2.0
 title: null
 author: Ian Strawn
 description: A website where I post a lot of the statistical/analytical things that I do!
@@ -7,5 +7,6 @@ plugins:
 
 kramdown:
   parse_block_html: true
+
 
 
