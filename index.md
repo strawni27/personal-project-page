@@ -2,6 +2,10 @@
 title: Ian Strawn
 ---
 
+markdown: kramdown
+kramdown:
+  parse_block_html: true
+
 <nav style="
     display: flex;
     justify-content: space-between;
