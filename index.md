@@ -4,12 +4,12 @@ layout: none
 ---
 
 <nav style="
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 25px;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ddd;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px 25px;
+background-color: #f5f5f5;
+border-bottom: 1px solid #ddd;
 ">
     <div style="font-weight: bold; font-size: 1.2rem;">
         Ian Strawn
@@ -48,6 +48,6 @@ layout: none
 
 # Welcome!
 
-My name is Ian Strawn, and this is my personal site! I'm a statistics Masters student at Oregon State University, and I aim to use this space to showcase some of the work that I do as a statistics student and aspiring data scientist/analyst. As I work on new projects, I'll upload them to the "Projects" section of this website. Thanks for taking a look!
+My name is Ian Strawn, and this is my personal site! I'm a statistics Masters student at Oregon State University, and I aim to use this space to showcase some of the work that I do as a statistics stu[...]
 
 ![Oregon State College of Science Logo](cos_logo.png)
