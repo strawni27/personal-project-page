@@ -35,10 +35,6 @@ layout: none
 
 </style>
 
-<a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
-
-<a href="https://strawni27.github.io/personal-project-page/projects" class="btn btn-green">View My Projects</a>
-
 <nav style="
 display: flex;
 justify-content: space-between;
@@ -47,6 +43,7 @@ padding: 15px 25px;
 background-color: #f5f5f5;
 border-bottom: 1px solid #ddd;
 ">
+
 <div style="font-weight: bold; font-size: 1.2rem;">
     Ian Strawn
 </div>
@@ -59,6 +56,9 @@ border-bottom: 1px solid #ddd;
 
 </div>
 </nav>
+
+<a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
+<a href="https://strawni27.github.io/personal-project-page/projects" class="btn btn-green">View My Projects</a>
 
 # Welcome!
 
