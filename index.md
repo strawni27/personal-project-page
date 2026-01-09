@@ -1,5 +1,6 @@
 ---
 title: Ian Strawn
+layout: none
 ---
 
 <nav style="
@@ -15,10 +16,10 @@ title: Ian Strawn
     </div>
 
     <div>
-        <a href="index.md" style="margin-right: 20px;">Home</a>
-        <a href="projects.md" style="margin-right: 20px;">Projects</a>
-        <a href="about.md" style="margin-right: 20px;">About</a>
-        <a href="contact.md">Contact</a>
+        <a href="index.html" style="margin-right: 20px;">Home</a>
+        <a href="projects.html" style="margin-right: 20px;">Projects</a>
+        <a href="about.html" style="margin-right: 20px;">About</a>
+        <a href="contact.html">Contact</a>
     </div>
 </nav>
 
