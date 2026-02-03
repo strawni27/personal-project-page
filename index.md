@@ -1,6 +1,6 @@
 ---
 title: Ian Strawn
-layout: none
+layout: default
 ---
 
 <style>
