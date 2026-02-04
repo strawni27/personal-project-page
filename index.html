@@ -69,32 +69,35 @@ nav {
 }
 
 .main-content {
-  background: #ffffff;
-  color: #24292e;
+  background: #fff;
+  padding: 3rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  border-radius: 6px;
 }
 
 </style>
 
 <nav>
-  <div class="nav-links">
-    <a href="/" class="nav-btn">Home</a>
-    <a href="/projects" class="nav-btn">Projects</a>
-    <a href="/about" class="nav-btn">About</a>
-    <a href="/contact" class="nav-btn">Contact</a>
-  </div>
-
   <div class="site-title">Ian Strawn</div>
+  <div class="nav-links">
+    <a href="{{ site.baseurl }}/" class="nav-btn">Home</a>
+    <a href="{{ site.baseurl }}/projects" class="nav-btn">Projects</a>
+    <a href="{{ site.baseurl }}/about" class="nav-btn">About</a>
+    <a href="{{ site.baseurl }}/contact" class="nav-btn">Contact</a>
+  </div>
 </nav>
 
-<main class="main-content">
+<div class="main-content">
+  <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
+  <a href="{{ site.baseurl }}/projects" class="btn btn-green">View My Projects</a>
 
-<a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
-<a href="https://strawni27.github.io/personal-project-page/projects" class="btn btn-green">View My Projects</a>
+  <h1>Welcome!</h1>
 
-# Welcome!
+  <p>
+    My name is Ian Strawn, and this is my personal site! I'm a statistics
+    Masters student at Oregon State University...
+  </p>
 
-My name is Ian Strawn, and this is my personal site! I'm a statistics Masters student at Oregon State University...
-
-![Oregon State College of Science Logo](cos_logo.png)
-
-</main>
+  <img src="{{ site.baseurl }}/cos_logo.png" alt="OSU College of Science">
+</div>
