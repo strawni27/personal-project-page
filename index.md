@@ -41,19 +41,44 @@ layout: default
 /* Navbar container */
 nav {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;   /* stack title above links */
+  justify-content: center;
   align-items: center;
-  padding: 15px 25px;
+  padding: 25px 25px;
   background: linear-gradient(120deg, #155799, #159957);
   border-bottom: none;
+}
+
+
+/* Title styling */
+.site-title {
+  font-size: 2.5rem;        /* Large like Cayman */
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Center the nav links */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 </style>
 
 <nav>
-<div style="font-weight: bold; font-size: 1.2rem;">
-    Ian Strawn
-</div>
+  <div class="nav-links">
+    <a href="/" class="nav-btn">Home</a>
+    <a href="/projects" class="nav-btn">Projects</a>
+    <a href="/about" class="nav-btn">About</a>
+    <a href="/contact" class="nav-btn">Contact</a>
+  </div>
+
+  <div class="site-title">Ian Strawn</div>
+</nav>
+
 
 <div>
 <a href="index.html" class="nav-btn" style="margin-right: 20px;">Home</a>
