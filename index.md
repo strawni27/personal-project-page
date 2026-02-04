@@ -79,16 +79,6 @@ nav {
   <div class="site-title">Ian Strawn</div>
 </nav>
 
-
-<div>
-<a href="index.html" class="nav-btn" style="margin-right: 20px;">Home</a>
-<a href="projects.html" class="nav-btn" style="margin-right: 20px;">Projects</a>
-<a href="about.html" class="nav-btn" style="margin-right: 20px;">About</a>
-<a href="contact.html" class="nav-btn">Contact</a>
-
-</div>
-</nav>
-
 <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
 <a href="https://strawni27.github.io/personal-project-page/projects" class="btn btn-green">View My Projects</a>
 
