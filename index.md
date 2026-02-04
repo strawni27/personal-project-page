@@ -28,10 +28,12 @@ layout: default
 
 /* Navbar buttons */
 .nav-btn {
-  background: transparent;
+  display: inline-block;
+  padding: 8px 14px;
+  text-decoration: none;
   color: #fff !important;
   font-weight: 600;
-
+  border-radius: 4px;
 }
 
 .nav-btn:hover {
@@ -66,6 +68,11 @@ nav {
   gap: 20px;
 }
 
+.main-content {
+  background: #ffffff;
+  color: #24292e;
+}
+
 </style>
 
 <nav>
@@ -79,11 +86,15 @@ nav {
   <div class="site-title">Ian Strawn</div>
 </nav>
 
+<main class="main-content">
+
 <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
 <a href="https://strawni27.github.io/personal-project-page/projects" class="btn btn-green">View My Projects</a>
 
 # Welcome!
 
-My name is Ian Strawn, and this is my personal site! I'm a statistics Masters student at Oregon State University, and I aim to use this space to showcase some of the work that I do as a statistics stu[...]
+My name is Ian Strawn, and this is my personal site! I'm a statistics Masters student at Oregon State University...
 
 ![Oregon State College of Science Logo](cos_logo.png)
+
+</main>
