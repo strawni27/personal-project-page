@@ -4,6 +4,11 @@ layout: default
 ---
 
 <style>
+/*Remove the default header*/
+.page-header {
+  display: none;
+}
+
 /* Buttons */
 .btn {
   display: inline-block;
