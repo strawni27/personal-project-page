@@ -4,6 +4,7 @@ layout: default
 ---
 
 <style>
+/* Buttons */
 .btn {
   display: inline-block;
   color: #fff !important;
@@ -20,17 +21,26 @@ layout: default
 .btn-green { background: #28a745; }
 .btn-green:hover { background: #1e7e34; }
 
+/* Navbar buttons */
 .nav-btn {
-  padding: 8px 14px;
-  background: #e0e0e0;
-  border-radius: 6px;
-  text-decoration: none;
-  color: #333 !important;
+  background: transparent;
+  color: #fff !important;
   font-weight: 600;
+
 }
 
 .nav-btn:hover {
-  background: #cfcfcf;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Navbar container */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background: linear-gradient(120deg, #155799, #159957);
+  border-bottom: none;
 }
 
 </style>
@@ -55,7 +65,6 @@ border-bottom: 1px solid #ddd;
 <a href="contact.html" class="nav-btn">Contact</a>
 
 </div>
-</nav>
 
 <a href="https://www.linkedin.com/in/ian-strawn-548234255" class="btn btn-blue">LinkedIn</a>
 <a href="https://strawni27.github.io/personal-project-page/projects" class="btn btn-green">View My Projects</a>
