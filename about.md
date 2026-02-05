@@ -1,1 +1,86 @@
-Contents coming soon!
+---
+title: About me!
+layout: default
+---
+<style>
+/*Remove the default header*/
+.page-header {
+  display: none;
+}
+
+/* Navbar buttons */
+.nav-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  text-decoration: none;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Navbar container */
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 25px 25px;
+  background: linear-gradient(120deg, #155799, #159957);
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Title styling */
+.site-title {
+  font-size: 2.5rem;        /* Large like Cayman */
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Center the nav links */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  display: inline-block;
+  color: #fff !important;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+}
+
+.btn-blue { background: #0077b5; }
+.btn-blue:hover { background: #005983; }
+
+.btn-green { background: #28a745; }
+.btn-green:hover { background: #1e7e34; }
+
+body {
+  margin: 0;
+}
+
+</style>
+
+<nav>
+  <div class="site-title">Ian Strawn</div>
+  <div class="nav-links">
+    <a href="{{ site.baseurl }}/" class="nav-btn">Home</a>
+    <a href="{{ site.baseurl }}/projects" class="nav-btn">Projects</a>
+    <a href="{{ site.baseurl }}/about" class="nav-btn">About</a>
+    <a href="{{ site.baseurl }}/contact" class="nav-btn">Contact</a>
+  </div>
+</nav>
