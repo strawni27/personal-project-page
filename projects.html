@@ -1,0 +1,114 @@
+---
+title: "My Projects"
+description: "Take a look at the things I've created and shared!"
+layout: default
+---
+
+<style>
+/*Remove the default header*/
+.page-header {
+  display: none;
+}
+
+/* Navbar buttons */
+.nav-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  text-decoration: none;
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Navbar container */
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 25px 25px;
+  background: linear-gradient(120deg, #155799, #159957);
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Title styling */
+.site-title {
+  font-size: 2.5rem;        /* Large like Cayman */
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Center the nav links */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  display: inline-block;
+  color: #fff !important;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+}
+
+.btn-blue { background: #0077b5; }
+.btn-blue:hover { background: #005983; }
+
+.btn-green { background: #28a745; }
+.btn-green:hover { background: #1e7e34; }
+
+</style>
+
+<nav>
+  <div class="site-title">Ian Strawn</div>
+  <div class="nav-links">
+    <a href="{{ site.baseurl }}/" class="nav-btn">Home</a>
+    <a href="{{ site.baseurl }}/projects" class="nav-btn">Projects</a>
+    <a href="{{ site.baseurl }}/about" class="nav-btn">About</a>
+    <a href="{{ site.baseurl }}/contact" class="nav-btn">Contact</a>
+  </div>
+</nav>
+
+<a href="https://strawni27.github.io/personal-project-page/" class="btn btn-green">Back to Home</a>
+
+<p>Welcome! Here you'll find a handful of projects that I've worked on during my time at Oregon State.</p>
+
+<h1>Project 1: Wine Quality Analysis Using Machine Learning Techniques</h1>
+<p><strong>Completed 06/09/2025</strong></p>
+
+<p>This project was one that I did as the final project for ST 599: Topics in Machine Learning. In it, I discuss theory behind machine learning regression techniques, then implement those to analyze wine quality data.</p>
+
+<ul>
+  <li><a href="wine-project/final_project.pdf">Read the PDF Report</a></li>
+  <li><a href="wine-project/final_project.Rmd">View R Code</a></li>
+  <li>View the datasets:
+    <ul>
+      <li><a href="wine-project/winequality-red.csv">Red Wine</a></li>
+      <li><a href="wine-project/winequality-white.csv">White Wine</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1>Project 2: Monte-Carlo Simulation Study Involving Low-Probability Events in Golf</h1>
+<p><strong>Completed 12/10/2025</strong></p>
+
+<p>This is another final project that I did, this time for ST 541: Probability, Computation, and Simulation. This project involved conducting a simulation study to estimate low-probability events, which I chose to apply to the probability of breaking 59 on the PGA Tour.</p>
+
+<ul>
+  <li><a href="golf-montecarlo-project/breaking_60_with_sims.pdf">Read the PDF Report</a></li>
+  <li><a href="golf-montecarlo-project/breaking_60_with_sims.pdf">View R Code</a></li>
+</ul>
