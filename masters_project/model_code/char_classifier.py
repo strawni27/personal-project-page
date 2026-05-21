@@ -1,0 +1,239 @@
+import pandas as pd
+import os
+import numpy as np
+import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+
+#This loads in the data 
+folder = './data/character_font_images/'
+#This next line takes all of the CSV's and joins them together
+all_files = [os.path.join(folder, f) for f in os.listdir(folder) if f.endswith('.csv')]
+#Reads all of the CSV's, concatonates them all into their own data files
+df = pd.concat([pd.read_csv(f) for f in all_files], ignore_index=True)
+
+#Poking around with the data momentarily to get normalization statistics
+pixel_cols = [c for c in df.columns if c.startswith('r')]
+pixels = df[pixel_cols].values / 255.0
+
+#Getting the mean and standard deviation
+mean = pixels.mean()
+std = pixels.std()
+
+print(f"Mean: {mean:.4f}, Std: {std:.4f}")    
+
+#Pulling the character labels and assigning numerical values to them
+
+#Start by getting the unique fonts
+unique_chars = sorted(df['m_label'].unique())
+num_classes = len(unique_chars)
+
+chars_to_idx = {chars: idx for idx, chars in enumerate(unique_chars)}
+df['chars_label'] = df['m_label'].map(chars_to_idx)
+
+#Defining the data class that we'll be using
+from torch.utils.data import Dataset, random_split
+class CharDataset(Dataset):
+    #Setting up the data set (different features that might be present here)
+    def __init__(self, X, y, mean, std, transform=None):
+        self.images = X[pixel_cols].values.astype(np.float32)
+        self.labels = y['chars_label'].values
+        self.mean = np.float32(mean)
+        self.std = np.float32(std)
+        self.transform = transform
+        
+    #How long is the data set?
+    def __len__(self):
+        return len(self.images)
+    
+    #How do we pull an item from this dataset?
+    def __getitem__(self, idx):
+        #Making the rows look like 20x20 images
+        image = self.images[idx].reshape(1, 20, 20).astype(np.float32) / 255.0
+        #Standardizing
+        image = (image - self.mean) / self.std
+        #Keeping track of labels
+        label = self.labels[idx]
+        #Give output pls
+        return torch.tensor(image), torch.tensor(label, dtype = torch.long)
+
+pixel_cols = [c for c in df.columns if c.startswith('r')]
+X = df[pixel_cols]
+y = df[['chars_label']]
+
+#Data Loaders
+#Getting the data loaders
+#Data set first
+dataset = CharDataset(X, y, mean, std)
+
+#Getting batch sizes
+batch_size = 32
+
+train_size = int(0.7 * len(dataset))
+val_size = int(0.15 * len(dataset))
+test_size = len(dataset) - train_size - val_size
+
+trainset, valset, testset = random_split(dataset, [train_size, val_size, test_size])
+
+#Defining the data loaders
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, 
+                                          shuffle = True, num_workers = 2)
+
+valloader = torch.utils.data.DataLoader(valset, batch_size = batch_size,
+                                         shuffle = False, num_workers = 2) #Doesn't need to be shuffled cuz we're just validating on it
+
+testloader = torch.utils.data.DataLoader(testset, batch_size = batch_size,
+                                         shuffle = False, num_workers = 2) #Doesn't need to be shuffled
+
+#Structure of the net (it'll be the same as with the font classifier
+import torch.nn.functional as F
+import torch.optim as optim
+
+class ResBlock(nn.Module):
+    def __init__(self, in_channels, out_channels):
+        super().__init__()
+        #gonna have a similar structure as the original net did, but with a resnet flavor instead of pooling layers
+        self.conv1 = nn.Conv2d(in_channels, out_channels, 3, padding = 1)
+        self.bn1 = nn.BatchNorm2d(out_channels)
+        self.conv2 = nn.Conv2d(out_channels, out_channels, 3, padding = 1)
+        self.bn2 = nn.BatchNorm2d(out_channels)
+        self.shortcut = nn.Conv2d(in_channels, out_channels, 1)
+        
+    def forward(self, x):
+        residual = self.shortcut(x)
+        x = F.relu(self.bn1(self.conv1(x)))
+        x = self.bn2(self.conv2(x))
+        x = F.relu(x + residual)
+        return x
+
+class Net(nn.Module):
+    def __init__(self):
+        super().__init__()
+        #Going to have 2 repititions of the resnet blocks, a couple pooling layers, and then 3 linear layers.
+        self.block1 = ResBlock(1, 30)
+        self.pool = nn.MaxPool2d(2,2)
+        self.block2 = ResBlock(30, 60)
+        self.block3 = ResBlock(60, 100)
+        self.fc1 = nn.Linear(100*5*5, 250)
+        self.fc2 = nn.Linear(250, 200)
+        self.fc3 = nn.Linear(200,153)
+    
+    def forward(self,x):
+        x = self.pool(self.block1(x))
+        x = self.pool(self.block2(x))
+        x = self.block3(x)
+        #Now we flatten the convoluted data
+        x = torch.flatten(x, 1)
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return(x)
+
+#Now, loading in the trained weights from the font classifier
+frozone = Net()
+frozone.load_state_dict(torch.load('font_net.pth', weights_only = True))
+
+#Freezing the convolution blocks but leaving the last layers
+for name, param in frozone.named_parameters():
+    if 'fc' not in name:
+        param.requires_grad = False
+
+#Now, swapping in some new layers for the new task
+frozone.fc1 = nn.Linear(100*5*5, 4500)
+frozone.fc2 = nn.Linear(4500, 8500)
+frozone.fc3 = nn.Linear(8500, num_classes)
+
+#Loss function, optimizer, and training loop
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(filter(lambda p: p.requires_grad, frozone.parameters()), lr = 0.005, momentum = 0.9)
+
+#Attempting to shove my stuff into the GPU manually, just to be safe
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+frozone = frozone.to(device)
+
+#Training Loop
+epochs = 12
+total_batches = len(trainloader) * epochs
+batches_done = 0
+log_file = open('char_classifier.txt', 'w')
+
+for epoch in range(epochs):
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
+        #Getting the inputs, assuming data is of structure [inputs, labels], and sending them to the GPU
+        inputs, labels = data
+        inputs, labels = inputs.to(device), labels.to(device)
+        
+        #Zero parameter gradients
+        optimizer.zero_grad()
+        
+        #Forward, backward, and optimize
+        outputs = frozone(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+        
+        #Tell me the statistics
+        running_loss += loss.item()
+        batches_done += 1
+        #Print the loss statistics every 3000 mini batches
+        if i % 3000 == 2999: 
+            pct = 100 * batches_done / total_batches
+            msg = f'[Epoch {epoch+1}, Batch {i+1}] loss: {running_loss/3000:.3f} | Progress: {pct:.1f}%\n'
+            print(msg)
+            log_file.write(msg)
+            log_file.flush()
+    
+    #Adding a validation step
+    frozone.eval()
+    val_loss = 0.0
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for data in valloader:
+            inputs, labels = data
+            inputs, labels = inputs.to(device), labels.to(device)
+            outputs = frozone(inputs)
+            val_loss += criterion(outputs, labels).item()
+            _, predicted = torch.max(outputs, 1)
+            total += labels.size(0)
+            correct += (predicted ==labels).sum().item()
+    msg = f'Val Loss: {val_loss/len(valloader):.3f} | Accuracy: {100*correct/total:.1f}%\n'
+    print(msg)
+    log_file.write(msg)
+    log_file.flush()
+    
+    #Saving a checkpoint at the end of each epoch in case bad shit happens
+    torch.save(frozone.state_dict(), f'checkpoint_epoch_{epoch+1}.pth')
+    frozone.train()
+
+print('Training Completeeeeeeeeeeeeeeeeee')
+
+#Saving the model as a path
+PATH = './char_net.pth'
+torch.save(frozone.state_dict(), PATH)
+
+#Loading back in our model
+frozone_test = Net()
+frozone_test.fc1 = nn.Linear(100*5*5, 4500)
+frozone_test.fc2 = nn.Linear(4500, 8500)
+frozone_test.fc3 = nn.Linear(8500, num_classes)
+frozone_test.load_state_dict(torch.load(PATH, weights_only=True))
+
+#Checking the accuracy of the model
+correct = 0
+total = 0 
+#Without calculating gradients, we're checking the correctness of each of the test images
+frozone_test.eval()
+with torch.no_grad():
+    for data in testloader:
+        images, labels = data
+        outputs = frozone_test(images)
+        _, predicted = torch.max(outputs, 1)
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item()
+    print(f'Accuracy of the network on the 10000 test images: {100 * correct // total} %')
+    
+#Stop writing the log file
+log_file.close()
