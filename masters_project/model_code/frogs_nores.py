@@ -41,10 +41,10 @@ class Net(nn.Module):
     def __init__(self):
         super().__init__()
         #This layer takes the 3 channels, flattens them into 6 maps, and uses a 3x3 filter to slide over the images
-        self.conv1 = nn.Conv2d(3, 15, 3, padding = 1)
+        self.conv1 = nn.Conv2d(3, 25, 3, padding = 1)
         self.pool = nn.MaxPool2d(2,2)
-        self.conv2 = nn.Conv2d(15, 50, 3, padding = 1)
-        self.conv3 = nn.Conv2d(50, 100, 3, padding = 1)
+        self.conv2 = nn.Conv2d(25, 60, 3, padding = 1)
+        self.conv3 = nn.Conv2d(60, 100, 3, padding = 1)
         self.fc1 = nn.Linear(100*8*8, 4000)
         self.fc2 = nn.Linear(4000, 1000)
         self.fc3 = nn.Linear(1000, 10)
